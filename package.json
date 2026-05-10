@@ -1,0 +1,10 @@
+{
+  "name": "wolfstreet77-game",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"Build scripts will be added later\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
