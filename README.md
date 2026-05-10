@@ -234,4 +234,3 @@ Všechny chyby jsou se zachází s `htmlspecialchars()` pro ochranu před XSS.
 **Verze:** 0.1.0  
 **Poslední aktualizace:** 2026-05-10
 
-"# Wolfstreet77" 
