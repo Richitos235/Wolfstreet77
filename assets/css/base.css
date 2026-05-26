@@ -1,0 +1,81 @@
+:root {
+    /* Colors */
+    --bg-dark: #0d1117;
+    --bg-darker: #05070a;
+    --bg-glass: rgba(22, 27, 34, 0.7);
+    --bg-glass-heavy: rgba(13, 17, 23, 0.9);
+    
+    --accent-blue: #58a6ff;
+    --accent-blue-glow: rgba(88, 166, 255, 0.3);
+    --accent-green: #3fb950;
+    --accent-green-glow: rgba(63, 185, 80, 0.3);
+    --accent-purple: #bc8cff;
+    --accent-red: #f85149;
+    
+    --text-main: #c9d1d9;
+    --text-muted: #8b949e;
+    --text-bright: #f0f6fc;
+    
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --border-active: rgba(88, 166, 255, 0.4);
+    
+    /* Spacing */
+    --space-xs: 8px;
+    --space-sm: 16px;
+    --space-md: 24px;
+    --space-lg: 32px;
+    --space-xl: 48px;
+    
+    /* Effects */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .futuristic-text {
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-bright);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-glass);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
+}

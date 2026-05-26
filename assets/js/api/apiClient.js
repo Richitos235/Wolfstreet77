@@ -8,14 +8,17 @@ export class ApiClient {
     }
 
     async get(path) {
-        const response = await fetch(`${this.baseUrl}${path}`, {
+        // Ensure path starts with / if it doesn't
+        const cleanPath = path.startsWith('/') ? path : `/${path}`;
+        const response = await fetch(`${this.baseUrl}${cleanPath}`, {
             credentials: 'include',
         });
         return response.json();
     }
 
     async post(path, body) {
-        const response = await fetch(`${this.baseUrl}${path}`, {
+        const cleanPath = path.startsWith('/') ? path : `/${path}`;
+        const response = await fetch(`${this.baseUrl}${cleanPath}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

@@ -1,186 +1,158 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/app/Helpers/SessionHelper.php';
+require_once __DIR__ . '/app/Config/Database.php';
+require_once __DIR__ . '/app/Services/Service.php';
+require_once __DIR__ . '/app/Services/MarketService.php';
+require_once __DIR__ . '/app/Helpers/TickHelper.php';
+require_once __DIR__ . '/app/Game/GameTimeManager.php';
+
+use App\Helpers\SessionHelper;
+use App\Services\MarketService;
+use App\Helpers\TickHelper;
+
+SessionHelper::start();
+
+$marketService = new MarketService();
+$tickHelper = new TickHelper();
+$stocks = $marketService->getAllStocks() ?: [];
+$newsFeeds = $marketService->getNewsFeeds(3) ?: [];
+
+$gameDayDisplay = $tickHelper->getGameDayDisplay();
+$gameTime = $tickHelper->getGameTimeFormatted();
+
+?>
 <!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wolfstreet77 | Staň se králem trhu</title>
+    <title>Wolfstreet77 | The Underworld Exchange</title>
     
-    <!-- CSS linky z tvého repozitáře -->
-    <link rel="stylesheet" href="/assets/css/base/reset.css" />
-    <link rel="stylesheet" href="/assets/css/themes/dark.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
     <link rel="stylesheet" href="/assets/css/pages/landing.css" />
-    
-    <!-- Google Fonts pro lepší herní vzhled -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body class="theme-dark">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container navbar-container">
-            <div class="navbar-brand">
-                <span class="logo-icon">🐺</span>
-                <span class="logo-text">Wolfstreet77</span>
+<body class="cyber-theme">
+    <!-- Market Ticker -->
+    <div class="market-ticker">
+        <div class="ticker-content">
+            <div class="ticker-item" style="border-right: 1px solid var(--border-glass); margin-right: 20px;">
+                <span style="color: var(--accent-blue); font-weight: 800;"><?php echo $gameDayDisplay; ?></span>
+                <span style="color: var(--text-bright); margin-left: 10px;"><?php echo $gameTime; ?></span>
             </div>
-            <div class="navbar-actions">
-                <a href="login.php" class="btn btn--text">Přihlášení</a>
-                <a href="register.php" class="btn btn--primary">Vytvořit účet</a>
+            <?php foreach (array_merge($stocks, $stocks) as $stock): ?>
+                <div class="ticker-item">
+                    <span class="ticker-symbol"><?php echo htmlspecialchars($stock['short_name']); ?></span>
+                    <span class="ticker-price">$<?php echo number_format((float)$stock['current_price'], 2); ?></span>
+                    <span class="ticker-trend <?php echo $stock['trend']; ?>">
+                        <?php echo $stock['trend'] === 'rising' ? '▲' : ($stock['trend'] === 'falling' ? '▼' : '■'); ?>
+                    </span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="brand">
+                <div class="brand-logo" style="background: var(--accent-blue); color: var(--bg-darker); font-weight: 900; padding: 4px 8px; border-radius: 4px;">W77</div>
+                <span class="brand-name" style="font-family: 'Rajdhani'; font-size: 24px; font-weight: 700;">WOLFSTREET<span style="color: var(--accent-blue);">77</span></span>
+            </div>
+            <div class="nav-links">
+                <?php if (SessionHelper::isAuthenticated()): ?>
+                    <a href="home.php" class="btn btn-primary">Enter Dashboard</a>
+                <?php else: ?>
+                    <a href="login.php" class="nav-link" style="color: var(--text-muted); font-weight: 600; margin-right: 20px;">Login</a>
+                    <a href="register.php" class="btn btn-primary">Join the Syndicate</a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <h1 class="hero-title">Vládni ulicím <br><span class="text-gradient">Wolfstreet77</span></h1>
-            <p class="hero-subtitle">MMORPG ekonomická simulace z prostředí vysokých financí i temného podsvětí.</p>
-            
-            <div class="hero-cta">
-                <a href="register.php" class="btn btn--primary btn--large">Začít kariéru</a>
-                <a href="#market" class="btn btn--secondary btn--large">Sledovat trh</a>
+    <header class="hero-v2">
+        <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="glow-orb"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag">EST. 2026 // GLOBAL ECONOMY SIMULATOR</div>
+            <h1 class="hero-title">
+                MASTER THE <span style="color: var(--accent-blue); text-shadow: 0 0 20px var(--accent-blue-glow);">MARKET</span><br>
+                RULE THE <span style="color: var(--accent-red); text-shadow: 0 0 20px rgba(248, 81, 73, 0.5);">STREETS</span>
+            </h1>
+            <p class="hero-lead">
+                A high-stakes multiplayer economy where every trade matters. Build factories, manipulate stocks, and climb the underworld hierarchy in a persistent 6-hour tick cycle.
+            </p>
+            <div class="hero-actions">
+                <a href="register.php" class="btn btn-primary" style="padding: 16px 32px; font-size: 18px;">Start Your Empire</a>
+                <a href="#market-data" class="btn btn-secondary" style="padding: 16px 32px; font-size: 18px;">View Live Data</a>
             </div>
         </div>
     </header>
 
-    <!-- Market Preview Section -->
-    <section id="market" class="market-preview">
-        <div class="container">
+    <!-- Market Data Section -->
+    <section id="market-data" class="market-section">
+        <div class="section-container">
             <div class="section-header">
-                <h2>Živý kurz akcií</h2>
-                <p>Aktualizováno každých 6 hodin</p>
+                <h2 class="section-title">Live Exchange</h2>
+                <p class="section-subtitle">Real-time asset valuation across the Wolfstreet network.</p>
             </div>
             
-            <div class="table-responsive">
-                <table class="market-preview-table">
-                    <thead>
-                        <tr>
-                            <th>Symbol</th>
-                            <th>Název společnosti</th>
-                            <th>Aktuální cena</th>
-                            <th>Trend</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($stocks)): ?>
-                            <tr><td colspan="4">Trh je momentálně uzavřen.</td></tr>
-                        <?php else: ?>
-                            <?php foreach (array_slice($stocks, 0, 5) as $stock): ?>
-                                <tr>
-                                    <td class="stock-symbol"><?php echo htmlspecialchars($stock['short_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($stock['name']); ?></td>
-                                    <td class="stock-price"><?php echo number_format((float)$stock['current_price'], 2, ',', ' '); ?> $</td>
-                                    <td class="trend-<?php echo $stock['trend']; ?>">
-                                        <span class="trend-badge">
-                                            <?php 
-                                            echo match($stock['trend']) {
-                                                'rising' => '📈 Vzestup',
-                                                'falling' => '📉 Pokles',
-                                                default => '➡️ Stabilní'
-                                            };
-                                            ?>
-                                        </span>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Herní Mechaniky</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Burza</h3>
-                    <p>Spekuluj na ceny akcií a komodit. Využij insider informace dřív než ostatní.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏢</div>
-                    <h3>Holding</h3>
-                    <p>Stavěj továrny a legální firmy, které ti zajistí stabilní cashflow.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤜</div>
-                    <h3>Podsvětí</h3>
-                    <p>Založ syndikát, verbuj lidi a ovládni čtvrtě pomocí síly a strachu.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Roles Section -->
-    <section class="roles section-dark">
-        <div class="container">
-            <div class="section-header">
-                <h2>Zvol si svůj osud</h2>
-            </div>
-            <div class="roles-grid">
-                <article class="role-card role-trader">
-                    <div class="role-image">🎩</div>
-                    <h3>Obchodník</h3>
-                    <p>Mozek operace. Manipuluje trhy a hromadí majetek skrze legální kličky.</p>
-                </article>
-                <article class="role-card role-gangster">
-                    <div class="role-image">🔫</div>
-                    <h3>Gangster</h3>
-                    <p>Síla ulice. Peníze získává vydíráním, loupežemi a kontrolou území.</p>
-                </article>
-                <article class="role-card role-pimp">
-                    <div class="role-image">🎭</div>
-                    <h3>Pasák</h3>
-                    <p>Mistr intrik. Ovládá noční život a profituje z lidských slabostí.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- News Section -->
-    <section class="news-preview">
-        <div class="container">
-            <div class="section-header">
-                <h2>Zprávy z Wolfstreet</h2>
-            </div>
-            <div class="news-preview-grid">
-                <?php foreach ($newsFeeds as $news): ?>
-                    <article class="news-preview-card">
-                        <div class="news-meta">
-                            <span class="news-category tag"><?php echo htmlspecialchars($news['category']); ?></span>
+            <div class="market-grid">
+                <?php foreach (array_slice($stocks, 0, 4) as $stock): ?>
+                    <div class="market-card glass-panel">
+                        <div class="card-header">
+                            <span class="stock-ticker" style="color: var(--accent-blue); font-weight: 800;"><?php echo htmlspecialchars($stock['short_name']); ?></span>
+                            <span class="stock-trend-icon <?php echo $stock['trend']; ?>" style="color: <?php echo $stock['trend'] === 'rising' ? 'var(--accent-green)' : 'var(--accent-red)'; ?>;">
+                                <?php echo $stock['trend'] === 'rising' ? '↗' : '↘'; ?>
+                            </span>
                         </div>
-                        <h3><?php echo htmlspecialchars($news['title']); ?></h3>
-                        <p><?php echo htmlspecialchars(mb_strimwidth($news['content'], 0, 110, "...")); ?></p>
-                    </article>
+                        <div class="stock-name" style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;"><?php echo htmlspecialchars($stock['name']); ?></div>
+                        <div class="stock-price" style="font-size: 32px; font-weight: 800; margin-bottom: 24px;">$<?php echo number_format((float)$stock['current_price'], 2); ?></div>
+                        <div class="stock-stats" style="display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border-glass);">
+                            <div class="stat">
+                                <span class="stat-label" style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Volatility</span>
+                                <span class="stat-value" style="font-weight: 700;"><?php echo $stock['volatility']; ?>%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label" style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Status</span>
+                                <span class="stat-value" style="font-weight: 700; color: <?php echo $stock['trend'] === 'rising' ? 'var(--accent-green)' : 'var(--accent-red)'; ?>;"><?php echo strtoupper($stock['trend']); ?></span>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <h2>Jsi připraven ovládnout trh?</h2>
-            <a href="register.php" class="btn btn--primary btn--large">Vstoupit do hry</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; <?php echo date("Y"); ?> Wolfstreet77. Všechna práva vyhrazena.</p>
-                <div class="footer-links">
-                    <a href="#">Pravidla</a>
-                    <a href="#">Podpora</a>
+    <footer class="main-footer" style="padding: 80px 0 40px; border-top: 1px solid var(--border-glass);">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="brand">
+                    <div class="brand-logo" style="background: var(--accent-blue); color: var(--bg-darker); font-weight: 900; padding: 4px 8px; border-radius: 4px;">W77</div>
+                    <span class="brand-name" style="font-family: 'Rajdhani'; font-size: 24px; font-weight: 700;">WOLFSTREET<span style="color: var(--accent-blue);">77</span></span>
+                </div>
+                <p style="color: var(--text-muted); margin-top: 16px;">The ultimate browser-based economy simulator.</p>
+            </div>
+            <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--border-glass); color: var(--text-muted); font-size: 14px; margin-top: 40px;">
+                <p>&copy; 2026 Wolfstreet77. All systems operational.</p>
+                <div class="footer-links" style="display: flex; gap: 24px;">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
                     <a href="#">Discord</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <script type="module" src="/assets/js/core/app.js"></script>
 </body>
 </html>
