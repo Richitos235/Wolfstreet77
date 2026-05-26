@@ -1,0 +1,12 @@
+/* Card component style for dashboards and widgets */
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 18px;
+    margin-bottom: 16px;
+}
+.card__header {
+    margin-bottom: 12px;
+    font-weight: bold;
+}

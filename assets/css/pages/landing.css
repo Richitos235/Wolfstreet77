@@ -1,0 +1,271 @@
+/* Landing Page Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(13, 17, 23, 0.95);
+    border-bottom: 1px solid rgba(88, 166, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand h1 {
+    font-size: 24px;
+    color: #58a6ff;
+    margin: 0;
+}
+
+.navbar-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    padding: 40px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: bold;
+    color: #58a6ff;
+    margin-bottom: 12px;
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    color: #c9d1d9;
+    margin-bottom: 16px;
+}
+
+.hero-description {
+    font-size: 16px;
+    color: #8b949e;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.features {
+    padding: 80px 40px;
+    background: rgba(22, 27, 34, 0.5);
+}
+
+.features h2 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #c9d1d9;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid rgba(88, 166, 255, 0.15);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: rgba(88, 166, 255, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px rgba(88, 166, 255, 0.1);
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    color: #58a6ff;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #8b949e;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.market-preview {
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+}
+
+.market-preview h2,
+.news-preview h2,
+.roles h2 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #c9d1d9;
+}
+
+.market-preview-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.market-preview-table thead {
+    background: rgba(88, 166, 255, 0.1);
+}
+
+.market-preview-table th {
+    padding: 16px;
+    text-align: left;
+    color: #58a6ff;
+    font-weight: 600;
+}
+
+.market-preview-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(88, 166, 255, 0.1);
+    color: #c9d1d9;
+}
+
+.trend-rising {
+    color: #3fb950;
+}
+
+.trend-falling {
+    color: #f85149;
+}
+
+.news-preview {
+    padding: 80px 40px;
+    background: rgba(22, 27, 34, 0.5);
+}
+
+.news-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.news-preview-card {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid rgba(88, 166, 255, 0.15);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.news-preview-card h3 {
+    color: #58a6ff;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.news-preview-card p {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.news-category {
+    display: inline-block;
+    background: rgba(88, 166, 255, 0.1);
+    color: #58a6ff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.roles {
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+}
+
+.roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.role-card {
+    background: rgba(13, 17, 23, 0.8);
+    border: 2px solid rgba(88, 166, 255, 0.15);
+    border-radius: 12px;
+    padding: 40px 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.role-card h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.role-card p {
+    color: #8b949e;
+    line-height: 1.6;
+}
+
+.role-card--trader {
+    border-color: rgba(88, 166, 255, 0.3);
+}
+
+.role-card--trader h3 {
+    color: #58a6ff;
+}
+
+.role-card--gangster {
+    border-color: rgba(248, 81, 73, 0.3);
+}
+
+.role-card--gangster h3 {
+    color: #f85149;
+}
+
+.role-card--pimp {
+    border-color: rgba(177, 106, 243, 0.3);
+}
+
+.role-card--pimp h3 {
+    color: #b16af3;
+}
+
+.role-card:hover {
+    transform: translateY(-8px);
+}
+
+.footer {
+    padding: 32px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(88, 166, 255, 0.1);
+    color: #8b949e;
+    font-size: 14px;
+    background: rgba(13, 17, 23, 0.95);
+}
